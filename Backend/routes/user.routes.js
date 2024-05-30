@@ -1,8 +1,8 @@
-const validateSearchQuery = require("../Middlewares/auth.validate");
+const validateUser = require("../Middlewares/auth.validate");
 const { createUser } = require("../controller/user.controller");
 
-const Router = require("express").Router();
+const router = require("express").Router();
 
-Router.post("/register", validateSearchQuery, createUser);
+router.post("/register", validateUser, createUser);
 
-module.exports = Router;
+module.exports = router;

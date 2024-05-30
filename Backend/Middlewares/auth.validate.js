@@ -1,20 +1,21 @@
 const Joi = require("joi");
-
-const schema = Joi.object().keys({
+const joiSchema = Joi.object().keys({
   username: Joi.string().email().lowercase().required(),
   password: Joi.string().min(3).max(6),
+  cnfpassword: Joi.any().valid(Joi.ref("password")).required(),
 });
 
-const validateSearchQuery = async (req, res, next) => {
-  const result = req.body;
-
+const validateUser = async (req, res, next) => {
+  const data = req.body;
+  console.log(data);
   try {
-    const response = await schema.validateAsync(result);
-    console.log(response);
+    const result = await joiSchema.validateAsync(data);
+    console.log(result);
     next();
-  } catch (error) {
-    return res.status(400).json({ error: error.details[0].message });
+  } catch (err) {
+    console.log(err);
+    return res.status(400).json(err);
   }
 };
 
-module.exports = validateSearchQuery;
+module.exports = validateUser;
