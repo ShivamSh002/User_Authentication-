@@ -7,4 +7,19 @@ const createUser = async (req, res) => {
   res.json(user);
 };
 
-module.exports = { createUser };
+const findUser = async (req, res) => {
+  console.log("controller");
+  const { username, password } = req.body;
+  const user = await User.findOne({
+    username: username,
+    password: password,
+  });
+  console.log(user);
+  if (user) {
+    return res.status(200).json(user);
+  } else {
+    return res.status(500).json("unauthorized");
+  }
+};
+
+module.exports = { createUser, findUser };
